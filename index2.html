@@ -1,0 +1,363 @@
+<!-- Place your logo file as zara-logo.png in the same folder -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zara Cosmetics</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --purple:#43208f;
+    --purple-light:#d8cdf0;
+    --gold:#c9a45b;
+    --text:#232323;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px 15px;
+
+    background:
+    radial-gradient(circle at top left,#efe8ff,#f7f3ff 40%,#fdf9f7);
+    font-family:Poppins,sans-serif;
+}
+
+.card{
+    width:430px;
+    max-width:100%;
+    background:#fff;
+    border-radius:34px;
+    overflow:hidden;
+    box-shadow:
+    0 30px 60px rgba(0,0,0,.08),
+    0 10px 25px rgba(67,32,143,.08);
+}
+
+/* HEADER */
+
+.hero{
+    height:310px;
+    position:relative;
+    overflow:hidden;
+
+    background:
+    radial-gradient(circle at 100% 0%,rgba(255,255,255,.75) 0 140px,transparent 141px),
+    radial-gradient(circle at 80% 25%,rgba(255,255,255,.3) 0 180px,transparent 181px),
+    linear-gradient(180deg,#d9cdef,#f2e9e0);
+}
+
+.hero::before{
+    content:'';
+    position:absolute;
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    background:rgba(255,255,255,.18);
+    top:-150px;
+    right:-80px;
+}
+
+.logo-wrap{
+    padding:35px;
+}
+
+.logo{
+    width:260px;
+    max-width:80%;
+}
+
+.badge{
+    position:absolute;
+    right:40px;
+    bottom:30px;
+
+    width:100px;
+    height:100px;
+
+    border-radius:50%;
+
+    background:
+    linear-gradient(
+        145deg,
+        #edd7a0,
+        #c8a156
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.6),
+    0 15px 25px rgba(0,0,0,.15);
+}
+
+.badge span{
+    font-family:'Cormorant Garamond',serif;
+    font-size:48px;
+    color:#76541f;
+}
+
+/* PROFILE */
+
+.profile{
+    margin:-70px auto 0;
+    width:88%;
+    background:white;
+    border-radius:28px;
+    padding:25px;
+    position:relative;
+    z-index:2;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.08);
+}
+
+.name{
+    font-family:'Cormorant Garamond',serif;
+    font-size:58px;
+    line-height:1;
+    color:var(--text);
+}
+
+.role{
+    margin-top:10px;
+    letter-spacing:4px;
+    color:var(--gold);
+    font-size:13px;
+}
+
+/* CONTENT */
+
+.content{
+    padding:30px;
+}
+
+.label{
+    letter-spacing:4px;
+    font-size:13px;
+    margin-bottom:28px;
+}
+
+.item{
+    display:flex;
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.icon{
+    width:56px;
+    height:56px;
+    border-radius:16px;
+    border:2px solid rgba(67,32,143,.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--purple);
+}
+
+.info small{
+    display:block;
+    color:#777;
+    letter-spacing:2px;
+    margin-bottom:5px;
+}
+
+.info strong{
+    font-size:17px;
+    color:#222;
+}
+
+.primary{
+    width:100%;
+    height:62px;
+    border:none;
+    border-radius:18px;
+    background:var(--purple);
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    font-family:'Cormorant Garamond',serif;
+
+    box-shadow:
+    0 12px 25px rgba(67,32,143,.25);
+
+    transition:.3s;
+}
+
+.primary:hover{
+    transform:translateY(-2px);
+}
+
+.row{
+    display:flex;
+    gap:14px;
+    margin-top:15px;
+}
+
+.secondary{
+    flex:1;
+    height:58px;
+    border-radius:18px;
+    background:white;
+    border:2px solid #ece8f3;
+    font-family:'Cormorant Garamond',serif;
+    font-size:22px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.secondary:hover{
+    background:#faf8ff;
+}
+
+/* QR */
+
+.qr-box{
+    margin-top:30px;
+    background:#f8f8f8;
+    border-radius:24px;
+    padding:18px;
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.qr{
+    width:90px;
+    height:90px;
+    border-radius:14px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    color:#999;
+}
+
+.qr-text h4{
+    font-weight:500;
+}
+
+.qr-text p{
+    color:#777;
+    font-size:14px;
+    margin-top:4px;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+    <div class="hero">
+
+        <div class="logo-wrap">
+            <img src="zara-logo.png" class="logo" alt="Zara Cosmetics">
+        </div>
+
+        <div class="badge">
+            <span>U</span>
+        </div>
+
+    </div>
+
+    <div class="profile">
+        <div class="name">Usman</div>
+        <div class="role">OWNER & FOUNDER</div>
+    </div>
+
+    <div class="content">
+
+        <div class="label">CONTACT DETAILS</div>
+
+        <div class="item">
+            <div class="icon">☎</div>
+            <div class="info">
+                <small>PHONE</small>
+                <strong>0321 499 5936</strong>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="icon">🌐</div>
+            <div class="info">
+                <small>WEBSITE</small>
+                <strong>zaracosmetic.com</strong>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="icon">⌂</div>
+            <div class="info">
+                <small>COMPANY</small>
+                <strong>Zara Cosmetics</strong>
+            </div>
+        </div>
+
+        <button class="primary"
+            onclick="location.href='tel:03214995936'">
+            Call Now
+        </button>
+
+        <div class="row">
+
+            <button class="secondary"
+                onclick="window.open('https://zaracosmetic.com')">
+                Website
+            </button>
+
+            <button class="secondary"
+                onclick="saveContact()">
+                Save Contact
+            </button>
+
+        </div>
+
+        <div class="qr-box">
+            <div class="qr">QR</div>
+            <div class="qr-text">
+                <h4>Scan to save contact</h4>
+                <p>Instantly open your digital profile.</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function saveContact(){
+
+const vcf=`BEGIN:VCARD
+VERSION:3.0
+FN:Usman
+ORG:Zara Cosmetics
+TITLE:Owner & Founder
+TEL:03214995936
+URL:https://zaracosmetic.com
+END:VCARD`;
+
+const blob=new Blob([vcf],{type:'text/vcard'});
+const a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download='Usman.vcf';
+a.click();
+}
+</script>
+
+</body>
+</html>
