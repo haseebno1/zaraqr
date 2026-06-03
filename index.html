@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Usman – Zara Cosmetic</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple:       #3d3587;
+    --purple-mid:   #5a52b0;
+    --purple-light: #7b74cc;
+    --lavender:     #e8e6f8;
+    --lavender-soft:#f4f3fc;
+    --cream:        #fdfcff;
+    --gold:         #c9a96e;
+    --text-dark:    #1a1730;
+    --text-mid:     #4a4770;
+    --text-light:   #9490b8;
+  }
+
+  body {
+    min-height: 100vh;
+    background: var(--lavender-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    padding: 24px;
+  }
+
+  /* ── Card shell ── */
+  .card {
+    width: 380px;
+    background: var(--cream);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow:
+      0 4px 24px rgba(61,53,135,.12),
+      0 1px 4px rgba(61,53,135,.08);
+    position: relative;
+    animation: rise .7s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes rise {
+    from { opacity:0; transform: translateY(28px) scale(.97); }
+    to   { opacity:1; transform: translateY(0)    scale(1);   }
+  }
+
+  /* ── Header band ── */
+  .header {
+    background: linear-gradient(145deg, var(--purple) 0%, var(--purple-mid) 60%, var(--purple-light) 100%);
+    padding: 40px 32px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 260px 200px at 110% -10%, rgba(255,255,255,.1) 0%, transparent 60%),
+      radial-gradient(ellipse 180px 160px at -20%  110%, rgba(201,169,110,.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* decorative circles */
+  .header::after {
+    content: '';
+    position: absolute;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.1);
+    top: -60px; right: -60px;
+    pointer-events: none;
+  }
+  .deco-circle {
+    position: absolute;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.08);
+    bottom: 10px; right: 20px;
+    pointer-events: none;
+  }
+
+  /* Logo area */
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,.15);
+    border: 1.5px solid rgba(255,255,255,.3);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(8px);
+    flex-shrink: 0;
+  }
+  .logo-icon svg { width: 26px; height: 26px; }
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #fff;
+  }
+  .logo-sub {
+    font-size: 9px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.6);
+    margin-top: 2px;
+  }
+
+  /* Person info */
+  .person {
+    position: relative;
+    z-index: 1;
+  }
+  .person-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: .01em;
+    line-height: 1.1;
+  }
+  .person-title {
+    margin-top: 6px;
+    font-size: 12px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* Avatar blob */
+  .avatar-blob {
+    position: absolute;
+    bottom: -34px; right: 28px;
+    width: 80px; height: 80px;
+    background: linear-gradient(145deg, var(--gold) 0%, #e8c98a 100%);
+    border-radius: 50%;
+    border: 4px solid var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--purple);
+    box-shadow: 0 8px 24px rgba(61,53,135,.25);
+    z-index: 2;
+  }
+
+  /* ── Body ── */
+  .body {
+    padding: 44px 32px 28px;
+  }
+
+  /* Divider with label */
+  .section-label {
+    font-size: 9px;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 16px;
+  }
+
+  /* Contact rows */
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .18s;
+  }
+  .contact-item:hover { transform: translateX(4px); }
+  .contact-item:hover .ci-icon { background: var(--purple); }
+  .contact-item:hover .ci-icon svg { stroke: #fff; }
+
+  .ci-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border-radius: 12px;
+    background: var(--lavender);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .18s;
+  }
+  .ci-icon svg { width: 18px; height: 18px; stroke: var(--purple); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: stroke .18s; }
+
+  .ci-text { display: flex; flex-direction: column; line-height: 1.3; }
+  .ci-label { font-size: 10px; color: var(--text-light); letter-spacing: .1em; text-transform: uppercase; }
+  .ci-value { font-size: 14px; font-weight: 500; color: var(--text-dark); margin-top: 1px; }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lavender) 30%, var(--lavender) 70%, transparent);
+    margin: 24px 0;
+  }
+
+  /* CTA buttons */
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
+    flex: 1;
+    height: 48px;
+    border: none;
+    border-radius: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    gap: 7px;
+    transition: transform .15s, box-shadow .15s;
+    text-decoration: none;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-mid) 100%);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(61,53,135,.3);
+  }
+  .btn-primary:hover { box-shadow: 0 10px 28px rgba(61,53,135,.4); }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--lavender);
+    color: var(--text-mid);
+  }
+  .btn-outline:hover { border-color: var(--purple-light); color: var(--purple); }
+  .btn svg { width:16px; height:16px; stroke: currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* QR strip */
+  .qr-strip {
+    margin-top: 24px;
+    padding: 18px 20px;
+    background: var(--lavender-soft);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .qr-box {
+    width: 64px; height: 64px; flex-shrink: 0;
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 2px 8px rgba(61,53,135,.1);
+  }
+  .qr-box canvas { display: block; }
+  .qr-info { flex: 1; }
+  .qr-info-title { font-size: 12px; font-weight: 500; color: var(--text-dark); }
+  .qr-info-sub   { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+
+  /* Footer */
+  .footer {
+    padding: 16px 32px 24px;
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-light);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .footer span { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- ── HEADER ── -->
+  <div class="header">
+    <div class="deco-circle"></div>
+
+    <div class="logo-wrap">
+      <div class="logo-icon">
+        <!-- Temp logo: stylised "Z" -->
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 5h16L5 21h16" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">Zara</span>
+        <span class="logo-sub">Cosmetics</span>
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">Usman</div>
+      <div class="person-title">Owner &amp; Founder</div>
+    </div>
+
+    <div class="avatar-blob">U</div>
+  </div>
+
+  <!-- ── BODY ── -->
+  <div class="body">
+
+    <div class="section-label">Contact Details</div>
+
+    <div class="contact-list">
+
+      <!-- Phone -->
+      <a class="contact-item" href="tel:+923214995936">
+        <div class="ci-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="ci-text">
+          <span class="ci-label">Phone</span>
+          <span class="ci-value">0321 499 5936</span>
+        </div>
+      </a>
+
+      <!-- Website -->
+      <a class="contact-item" href="https://zaracosmetic.com" target="_blank">
+        <div class="ci-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="ci-text">
+          <span class="ci-label">Website</span>
+          <span class="ci-value">zaracosmetic.com</span>
+        </div>
+      </a>
+
+      <!-- Company -->
+      <div class="contact-item" style="cursor:default;">
+        <div class="ci-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="ci-text">
+          <span class="ci-label">Company</span>
+          <span class="ci-value">Zara Cosmetic</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Action buttons -->
+    <div class="actions">
+      <a class="btn btn-primary" href="tel:+923214995936">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call Now
+      </a>
+      <a class="btn btn-outline" href="https://zaracosmetic.com" target="_blank">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Website
+      </a>
+    </div>
+
+    <!-- Save contact -->
+    <div style="margin-top:10px;">
+      <a id="saveBtn" class="btn btn-outline" style="width:100%; border-color: var(--lavender); color: var(--purple-mid);">
+        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save Contact
+      </a>
+    </div>
+
+    <!-- QR Code strip -->
+    <div class="qr-strip">
+      <div class="qr-box">
+        <canvas id="qrCanvas" width="52" height="52"></canvas>
+      </div>
+      <div class="qr-info">
+        <div class="qr-info-title">Scan to save contact</div>
+        <div class="qr-info-sub">Points to zaracosmetic.com</div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <div class="footer">Zara Cosmetic &nbsp;·&nbsp; <span>Beauty Redefined</span></div>
+
+</div><!-- /card -->
+
+<!-- ── QR Code (pure JS, no library needed for a simple matrix) ── -->
+<!-- We use qrcode.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  // QR Code on canvas
+  const qrContainer = document.createElement('div');
+  new QRCode(qrContainer, {
+    text: 'https://zaracosmetic.com',
+    width: 52,
+    height: 52,
+    colorDark: '#3d3587',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+  // Replace placeholder canvas with generated img
+  const qrImg = qrContainer.querySelector('img');
+  if(qrImg) {
+    qrImg.style.cssText = 'width:52px;height:52px;display:block;border-radius:6px;';
+    const box = document.querySelector('.qr-box');
+    box.innerHTML = '';
+    box.appendChild(qrImg);
+  }
+
+  // Save contact as vCard
+  document.getElementById('saveBtn').addEventListener('click', function(e){
+    e.preventDefault();
+    const vcf = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'FN:Usman',
+      'N:;Usman;;;',
+      'ORG:Zara Cosmetic',
+      'TITLE:Owner',
+      'TEL;TYPE=CELL:+923214995936',
+      'URL:https://zaracosmetic.com',
+      'END:VCARD'
+    ].join('\r\n');
+    const blob = new Blob([vcf], { type: 'text/vcard' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Usman-ZaraCosmetic.vcf';
+    a.click();
+  });
+</script>
+
+</body>
+</html>
