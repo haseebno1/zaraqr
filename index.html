@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zohaib — Zara Cosmetics</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+/* ── RESET ───────────────────────────────────────── */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#c9a45b;
+  --gold-lt:#e8d5a3;
+  --gold-dk:#8c6a2a;
+  --ink:#0e0b07;
+  --cream:#faf6ef;
+  --muted:#9e9285;
+  --border:rgba(201,164,91,.22);
+  --purple:#2e1a6e;
+}
+
+/* ── PAGE BACKDROP ───────────────────────────────── */
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:40px 16px;
+  background:#0c0a08;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* noise grain overlay */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.04;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* animated backdrop blobs */
+.backdrop{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+.blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  animation:drift 14s ease-in-out infinite alternate;
+}
+.blob-1{width:420px;height:420px;background:rgba(46,26,110,.55);top:-100px;left:-120px;animation-delay:0s}
+.blob-2{width:360px;height:360px;background:rgba(138,90,28,.3);bottom:-80px;right:-80px;animation-delay:-5s}
+.blob-3{width:280px;height:280px;background:rgba(60,18,80,.4);top:45%;left:55%;animation-delay:-9s}
+@keyframes drift{to{transform:translate(40px,30px) scale(1.08)}}
+
+/* ── CARD WRAPPER ────────────────────────────────── */
+.card{
+  width:420px;
+  max-width:100%;
+  background:var(--cream);
+  border-radius:36px;
+  overflow:hidden;
+  position:relative;
+  z-index:1;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06),
+    0 40px 80px rgba(0,0,0,.6),
+    0 12px 24px rgba(0,0,0,.3);
+  animation:rise .9s cubic-bezier(.22,.97,.58,1) both;
+}
+@keyframes rise{
+  from{opacity:0;transform:translateY(36px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+
+/* ── HERO BAND ───────────────────────────────────── */
+.hero{
+  height:240px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#1a0e36 0%,#2e1a6e 45%,#0e0b07 100%);
+}
+
+/* animated shimmer lines */
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 28px,
+    rgba(201,164,91,.04) 28px,
+    rgba(201,164,91,.04) 30px
+  );
+}
+
+/* floating circle deco */
+.hero-circle{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(201,164,91,.15);
+}
+.hc1{width:340px;height:340px;top:-160px;right:-80px}
+.hc2{width:200px;height:200px;top:80px;left:-60px;border-color:rgba(201,164,91,.08)}
+.hc3{width:120px;height:120px;bottom:-30px;right:100px;border-color:rgba(201,164,91,.1)}
+
+/* logo text */
+.brand{
+  position:absolute;
+  top:36px;
+  left:34px;
+  z-index:2;
+  animation:fadeUp .7s .25s cubic-bezier(.22,.97,.58,1) both;
+}
+.brand-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;
+  font-weight:600;
+  letter-spacing:6px;
+  color:var(--cream);
+  line-height:1;
+}
+.brand-sub{
+  font-family:'Outfit',sans-serif;
+  font-size:9px;
+  font-weight:300;
+  letter-spacing:5px;
+  color:rgba(232,213,163,.6);
+  margin-top:6px;
+  text-transform:uppercase;
+}
+
+/* golden monogram badge */
+.badge{
+  position:absolute;
+  bottom:28px;
+  right:32px;
+  z-index:2;
+  width:82px;
+  height:82px;
+  border-radius:50%;
+  background:conic-gradient(from 210deg,#c09040,#e8d5a3 30%,#c09040 55%,#edd8a0 75%,#8c6a2a 90%,#e0c07a);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.5);
+  cursor:default;
+  animation:popIn .6s .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+.badge::before{
+  content:'';
+  position:absolute;
+  inset:6px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);
+}
+@keyframes popIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+.badge-letter{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;
+  font-weight:600;
+  color:#3a2200;
+  line-height:1;
+  position:relative;
+  z-index:1;
+}
+
+/* shimmer sweep on badge */
+.badge:hover::after{
+  content:'';
+  position:absolute;
+  inset:-2px;
+  border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0%,rgba(255,255,255,.5) 30%,transparent 60%);
+  animation:spin 1.2s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── PROFILE STRIP ───────────────────────────────── */
+.profile{
+  background:var(--cream);
+  padding:28px 34px 20px;
+  border-bottom:1px solid rgba(0,0,0,.07);
+  animation:fadeUp .7s .35s cubic-bezier(.22,.97,.58,1) both;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:none}
+}
+.name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:56px;
+  font-weight:500;
+  line-height:.95;
+  color:var(--ink);
+  letter-spacing:-1px;
+}
+.name em{
+  font-style:italic;
+  color:var(--gold-dk);
+}
+.role-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:14px;
+  padding:6px 14px;
+  border-radius:100px;
+  background:var(--ink);
+}
+.role-tag span{
+  font-family:'Outfit',sans-serif;
+  font-size:9.5px;
+  font-weight:400;
+  letter-spacing:3.5px;
+  color:var(--gold-lt);
+  text-transform:uppercase;
+}
+.role-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── CONTENT ─────────────────────────────────────── */
+.content{
+  padding:28px 34px 34px;
+  animation:fadeUp .7s .45s cubic-bezier(.22,.97,.58,1) both;
+}
+
+.section-label{
+  font-family:'Outfit',sans-serif;
+  font-size:9px;
+  font-weight:400;
+  letter-spacing:4px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+/* contact rows */
+.contact-item{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 16px;
+  border-radius:16px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:background .2s,transform .15s;
+  position:relative;
+  overflow:hidden;
+}
+.contact-item:hover{
+  background:rgba(14,11,7,.05);
+  transform:translateX(4px);
+}
+.contact-item:active{transform:translateX(4px) scale(.98)}
+
+.c-icon{
+  width:48px;height:48px;
+  border-radius:14px;
+  border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  background:rgba(201,164,91,.06);
+  transition:background .2s,border-color .2s;
+  font-size:18px;
+}
+.contact-item:hover .c-icon{
+  background:rgba(201,164,91,.14);
+  border-color:rgba(201,164,91,.4);
+}
+.c-info{flex:1;min-width:0}
+.c-info small{
+  display:block;
+  font-family:'Outfit',sans-serif;
+  font-size:9px;
+  letter-spacing:3px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+.c-info strong{
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;
+  font-weight:500;
+  color:var(--ink);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:block;
+}
+.c-arrow{
+  color:var(--muted);
+  font-size:13px;
+  opacity:0;
+  transform:translateX(-6px);
+  transition:opacity .2s,transform .2s;
+}
+.contact-item:hover .c-arrow{opacity:1;transform:none}
+
+/* copy badge flash */
+.copy-flash{
+  position:absolute;
+  right:16px;
+  top:50%;transform:translateY(-50%);
+  background:var(--ink);
+  color:var(--gold-lt);
+  font-family:'Outfit',sans-serif;
+  font-size:10px;
+  letter-spacing:2px;
+  padding:4px 10px;
+  border-radius:8px;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .2s;
+}
+.copy-flash.show{opacity:1}
+
+/* divider */
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,0,0,.1),transparent);
+  margin:24px 0;
+}
+
+/* ── BUTTONS ─────────────────────────────────────── */
+.btn-primary{
+  width:100%;
+  height:62px;
+  border:none;
+  border-radius:20px;
+  background:var(--ink);
+  color:var(--gold-lt);
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;
+  font-weight:500;
+  letter-spacing:1px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 10px 30px rgba(14,11,7,.3);
+}
+.btn-primary::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(201,164,91,.15),transparent 60%);
+  opacity:0;
+  transition:opacity .3s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(14,11,7,.4)}
+.btn-primary:hover::before{opacity:1}
+.btn-primary:active{transform:translateY(0) scale(.98)}
+
+.btn-row{display:flex;gap:12px;margin-top:12px}
+.btn-secondary{
+  flex:1;
+  height:56px;
+  border-radius:18px;
+  background:transparent;
+  border:1.5px solid rgba(14,11,7,.15);
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;
+  font-weight:500;
+  color:var(--ink);
+  cursor:pointer;
+  transition:border-color .2s,background .2s,transform .2s;
+  position:relative;
+  overflow:hidden;
+}
+.btn-secondary:hover{
+  border-color:var(--gold);
+  background:rgba(201,164,91,.06);
+  transform:translateY(-2px);
+}
+.btn-secondary:active{transform:scale(.97)}
+
+/* ripple */
+.ripple{
+  position:absolute;
+  border-radius:50%;
+  transform:scale(0);
+  animation:rippleOut .55s linear;
+  background:rgba(201,164,91,.28);
+  pointer-events:none;
+}
+@keyframes rippleOut{to{transform:scale(4);opacity:0}}
+
+/* ── QR SECTION ──────────────────────────────────── */
+.qr-section{
+  margin-top:24px;
+  border:1.5px solid var(--border);
+  border-radius:22px;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:rgba(201,164,91,.04);
+  cursor:pointer;
+  transition:background .2s,border-color .2s;
+}
+.qr-section:hover{background:rgba(201,164,91,.09);border-color:rgba(201,164,91,.4)}
+
+#qr-canvas{
+  width:80px;height:80px;
+  border-radius:12px;
+  overflow:hidden;
+  flex-shrink:0;
+  background:white;
+}
+#qr-canvas canvas,#qr-canvas img{width:80px!important;height:80px!important;border-radius:12px}
+.qr-text h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;
+  font-weight:500;
+  color:var(--ink);
+}
+.qr-text p{
+  font-family:'Outfit',sans-serif;
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+  line-height:1.5;
+}
+
+/* ── FOOTER ──────────────────────────────────────── */
+.card-footer{
+  border-top:1px solid rgba(0,0,0,.07);
+  padding:16px 34px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.social-links{display:flex;gap:10px}
+.social-btn{
+  width:38px;height:38px;
+  border-radius:12px;
+  border:1.5px solid rgba(14,11,7,.12);
+  background:transparent;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+  transition:border-color .2s,background .2s,transform .2s;
+}
+.social-btn:hover{border-color:var(--gold);background:rgba(201,164,91,.1);transform:translateY(-2px)}
+.powered{
+  font-family:'Outfit',sans-serif;
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+
+/* ── WHATSAPP BUTTON ─────────────────────────────── */
+.btn-whatsapp{
+  width:100%;
+  height:62px;
+  border:none;
+  border-radius:20px;
+  background:#25D366;
+  color:#fff;
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;
+  font-weight:500;
+  letter-spacing:1px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  margin-top:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 24px;
+  transition:transform .2s,box-shadow .2s,background .2s;
+  box-shadow:0 10px 30px rgba(37,211,102,.3);
+}
+.btn-whatsapp::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent 60%);
+  opacity:0;
+  transition:opacity .3s;
+}
+.btn-whatsapp:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(37,211,102,.4);background:#20c25c}
+.btn-whatsapp:hover::before{opacity:1}
+.btn-whatsapp:active{transform:translateY(0) scale(.98)}
+.wa-icon{width:24px;height:24px;flex-shrink:0;display:block;vertical-align:middle;position:relative;top:0}
+
+/* ── TOAST ───────────────────────────────────────── */
+.toast{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--ink);
+  color:var(--gold-lt);
+  font-family:'Outfit',sans-serif;
+  font-size:13px;
+  letter-spacing:1.5px;
+  padding:12px 24px;
+  border-radius:100px;
+  z-index:100;
+  opacity:0;
+  transition:opacity .3s,transform .3s;
+  white-space:nowrap;
+  pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── MOBILE ──────────────────────────────────────── */
+@media(max-width:460px){
+  .name{font-size:46px}
+  .hero{height:210px}
+  .brand-name{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<div class="backdrop">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="card">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-circle hc1"></div>
+    <div class="hero-circle hc2"></div>
+    <div class="hero-circle hc3"></div>
+
+    <div class="brand">
+      <div class="brand-name">ZARA</div>
+      <div class="brand-sub">Cosmetics &amp; Beauty</div>
+    </div>
+
+    <div class="badge" title="Zohaib">
+      <span class="badge-letter">Z</span>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="profile">
+    <div class="name">Za<em>ra</em></div>
+    <div>
+      <div class="role-tag">
+        <div class="role-dot"></div>
+        <span>Owner &amp; Founder</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="section-label">Contact Details</div>
+
+    <!-- Phone -->
+    <div class="contact-item" onclick="copyText('0320 699 6228', this)" title="Copy number">
+      <div class="c-icon">☎</div>
+      <div class="c-info">
+        <small>Phone</small>
+        <strong>0320 699 6228</strong>
+      </div>
+      <div class="c-arrow">→</div>
+      <div class="copy-flash">COPIED</div>
+    </div>
+
+    <!-- Phone 2 -->
+    <div class="contact-item" onclick="copyText('+92 305 8727650', this)" title="Copy number">
+      <div class="c-icon">☎</div>
+      <div class="c-info">
+        <small>Phone</small>
+        <strong>+92 305 8727650</strong>
+      </div>
+      <div class="c-arrow">→</div>
+      <div class="copy-flash">COPIED</div>
+    </div>
+
+    <!-- Website -->
+    <div class="contact-item" onclick="window.open('https://zaracosmetic.com')" title="Open website">
+      <div class="c-icon">🌐</div>
+      <div class="c-info">
+        <small>Website</small>
+        <strong>zaracosmetic.com</strong>
+      </div>
+      <div class="c-arrow">→</div>
+    </div>
+
+    <!-- Company -->
+    <div class="contact-item" style="cursor:default" title="Company">
+      <div class="c-icon">✦</div>
+      <div class="c-info">
+        <small>Company</small>
+        <strong>Zara Cosmetics</strong>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CTA buttons -->
+    <button class="btn-primary" onclick="callNow(this)">
+      ☎&nbsp;&nbsp;Call Now
+    </button>
+
+    <button class="btn-primary" onclick="callNow2(this)" style="margin-top:12px;background:var(--gold-dk);color:#fff;box-shadow:0 10px 30px rgba(140,106,42,.3)">
+      ☎&nbsp;&nbsp;Call Now (Alt)
+    </button>
+
+    <button class="btn-whatsapp" onclick="openWhatsApp()">
+      <svg class="wa-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 3C8.82 3 3 8.82 3 16c0 2.62.73 5.06 2 7.16L3 29l6.06-1.97A13 13 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm0 23.8a11.76 11.76 0 0 1-6-1.64l-.43-.26-4.46 1.45 1.34-4.34-.28-.44A11.8 11.8 0 1 1 16 26.8zm6.47-8.84c-.35-.18-2.09-1.03-2.41-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.23-.41.26-.76.09-.35-.18-1.49-.55-2.84-1.75-1.05-.93-1.76-2.09-1.97-2.44-.2-.35-.02-.54.16-.71.16-.16.35-.41.53-.62.18-.2.23-.35.35-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.92-1.09-2.63-.29-.69-.58-.6-.8-.61h-.68c-.23 0-.62.09-.94.44-.32.35-1.22 1.19-1.22 2.91 0 1.71 1.25 3.36 1.43 3.6.18.23 2.47 3.77 5.98 5.29.84.36 1.49.58 2 .74.84.27 1.6.23 2.2.14.67-.1 2.09-.85 2.38-1.68.29-.82.29-1.52.2-1.67-.08-.15-.32-.23-.67-.41z" fill="#fff"/>
+      </svg>
+      Message on WhatsApp
+    </button>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="openSite(this)">Website</button>
+      <button class="btn-secondary" onclick="saveContact(this)">Save Contact</button>
+    </div>
+
+    <!-- QR -->
+    <div class="qr-section" onclick="toggleQR()" title="Scan to save contact">
+      <div id="qr-canvas"></div>
+      <div class="qr-text">
+        <h4>Scan to Save</h4>
+        <p>Point your camera at the QR code to instantly open this digital card.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="card-footer">
+    <div class="social-links">
+      <button class="social-btn" title="Instagram" onclick="showToast('Instagram coming soon')">📸</button>
+      <button class="social-btn" title="WhatsApp" onclick="openWhatsApp()">💬</button>
+      <button class="social-btn" title="Email" onclick="sendEmail()">✉</button>
+    </div>
+    <div class="powered">Digital Card</div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── QR GENERATION ───────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    new QRCode(document.getElementById('qr-canvas'), {
+      text: 'BEGIN:VCARD\nVERSION:3.0\nFN:Zohaib\nORG:Zara Cosmetics\nTITLE:Owner & Founder\nTEL:03206996228\nURL:https://zaracosmetic.com\nEND:VCARD',
+      width: 80,
+      height: 80,
+      colorDark: '#0e0b07',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  } catch(e) {
+    document.getElementById('qr-canvas').innerHTML = '<div style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#999;text-align:center;padding:6px">QR unavailable</div>';
+  }
+});
+
+/* ── RIPPLE ──────────────────────────────────────── */
+function addRipple(btn, e) {
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px`;
+  btn.appendChild(r);
+  r.addEventListener('animationend', () => r.remove());
+}
+
+document.querySelectorAll('.btn-primary,.btn-secondary').forEach(btn => {
+  btn.addEventListener('click', e => addRipple(btn, e));
+});
+
+/* ── ACTIONS ─────────────────────────────────────── */
+function callNow(el) {
+  window.location.href = 'tel:03206996228';
+}
+function callNow2(el) {
+  window.location.href = 'tel:+923058727650';
+}
+function openSite(el) {
+  window.open('https://zaracosmetic.com');
+}
+
+function saveContact(el) {
+  const vcf = `BEGIN:VCARD\r\nVERSION:3.0\r\nFN:Zohaib\r\nORG:Zara Cosmetics\r\nTITLE:Owner & Founder\r\nTEL:03206996228\r\nURL:https://zaracosmetic.com\r\nEND:VCARD`;
+  const blob = new Blob([vcf], { type: 'text/vcard' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Zohaib-ZaraCosmetics.vcf';
+  a.click();
+  showToast('Contact saved ✦');
+}
+
+function copyText(text, el) {
+  navigator.clipboard.writeText(text).then(() => {
+    const flash = el.querySelector('.copy-flash');
+    if (flash) {
+      flash.classList.add('show');
+      setTimeout(() => flash.classList.remove('show'), 1500);
+    }
+    showToast('Number copied ✦');
+  }).catch(() => {
+    showToast('Tap to call: ' + text);
+  });
+}
+
+function openWhatsApp() {
+  window.open('https://wa.me/923206996228');
+}
+function sendEmail() {
+  window.open('mailto:info@zaracosmetic.com');
+}
+
+let qrExpanded = false;
+function toggleQR() {
+  const qrCanvas = document.getElementById('qr-canvas');
+  if (!qrExpanded) {
+    qrCanvas.style.transition = 'width .3s,height .3s';
+    qrCanvas.style.width = '120px';
+    qrCanvas.style.height = '120px';
+    qrExpanded = true;
+  } else {
+    qrCanvas.style.width = '80px';
+    qrCanvas.style.height = '80px';
+    qrExpanded = false;
+  }
+}
+
+/* ── TOAST ───────────────────────────────────────── */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>
