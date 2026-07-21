@@ -580,6 +580,17 @@ body::before{
       <div class="copy-flash">COPIED</div>
     </div>
 
+    <!-- Phone 2 -->
+    <div class="contact-item" onclick="copyText('+92 305 8727650', this)" title="Copy number">
+      <div class="c-icon">☎</div>
+      <div class="c-info">
+        <small>Phone</small>
+        <strong>+92 305 8727650</strong>
+      </div>
+      <div class="c-arrow">→</div>
+      <div class="copy-flash">COPIED</div>
+    </div>
+
     <!-- Website -->
     <div class="contact-item" onclick="window.open('https://zaracosmetic.com')" title="Open website">
       <div class="c-icon">🌐</div>
@@ -713,17 +724,4 @@ function copyText(text, el) {
   });
 }
 
-function openWhatsApp() {
-  window.open('https://wa.me/923206996228');
-}
-function sendEmail() {
-  window.open('mailto:info@zaracosmetic.com');
-}
-
-let qrExpanded = false;
-function toggleQR() {
-  const qrCanvas = document.getElementById('qr-canvas');
-  if (!qrExpanded) {
-    qrCanvas.style.transition = 'width .3s,height .3s';
-    qrCanvas.style.width = '120px';
-    
+function openWha
